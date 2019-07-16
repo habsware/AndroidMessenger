@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "783856664013",
+    "firebase_url": "https://messenger-444f3.firebaseio.com",
+    "project_id": "messenger-444f3",
+    "storage_bucket": "messenger-444f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:783856664013:android:899dce104f2e83ad",
+        "android_client_info": {
+          "package_name": "com.habsware.messenger"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "783856664013-maubm7u0jb65sjpg5ia5gimtpl5p4rf3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.habsware.messenger",
+            "certificate_hash": "e3488986da1ad90d044b556c7e7939aae2e9d35c"
+          }
+        },
+        {
+          "client_id": "783856664013-n758thne0lmccu52pg33lvgdolqajb8p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjkoqK-kybuC1D4wa3zUwF6ccc7JA7l6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "783856664013-n758thne0lmccu52pg33lvgdolqajb8p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
