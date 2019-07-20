@@ -144,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(this, "Please provide a state for your presence status", Toast.LENGTH_SHORT).show();
             return;
         }
-        UserInfo user = new UserInfo(currentUserId, userName, fullName,phoneNum, status);
+        UserInfo user = new UserInfo(userName, fullName,phoneNum, status);
         ref.child("Users").child(currentUserId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

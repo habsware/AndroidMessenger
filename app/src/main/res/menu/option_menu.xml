@@ -21,5 +21,12 @@
     android:title="Log Out"
     app:showAsAction="never"
     >
-</item>
+    </item>
+
+    <item
+        android:id="@+id/dropDownMenu_groupChat"
+        android:title="Start Group Chat"
+        app:showAsAction="never"
+        >
+    </item>
 </menu>

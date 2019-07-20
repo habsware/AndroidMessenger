@@ -2,28 +2,19 @@ package com.habsware.messenger;
 
 public class UserInfo {
 
-    String id;
     String userName;
+    String fullName;
+    String phoneNum;
+    String statusMode;
 
-    public UserInfo(String id, String userName, String fullName, String phoneNum, String statusMode) {
-        this.id = id;
+    public UserInfo(String userName, String fullName, String phoneNum, String statusMode) {
         this.userName = userName;
         this.fullName = fullName;
         this.phoneNum = phoneNum;
         this.statusMode = statusMode;
     }
-
-    String fullName;
-    String phoneNum;
-    String statusMode;
-
     public UserInfo() {
     }
-
-    public String getId() {
-        return id;
-    }
-
     public String getUserName(){
         return userName;
     }

@@ -13,8 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -94,7 +97,48 @@ public class MainActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.dropDownMenu_findFriends){
         }
+        if (item.getItemId() == R.id.dropDownMenu_groupChat){
+            startNewGroupchat();
+        }
         return true;
+    }
+
+    private void startNewGroupchat() {
+
+        final EditText groupNameEditText = new EditText(this);
+        groupNameEditText.setHint("e.g" + "\"\"");
+
+
+        new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
+                .setTitle("Provide The Name Of The New Group")
+                .setView(groupNameEditText)
+                .setPositiveButton("Create ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String getGroupName = groupNameEditText.getText().toString().trim();
+                        if (getGroupName.isEmpty())
+                            Toast.makeText(MainActivity.this, "Please provide a group name", Toast.LENGTH_SHORT).show();
+                        else
+                            createNewGroupChat(getGroupName);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_input_add)
+                .show();
+    }
+
+    private void createNewGroupChat(final String groupName) {
+        ref.child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(MainActivity.this, groupName + " has been created successfully", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void redirectUserToLoginActivity(){
