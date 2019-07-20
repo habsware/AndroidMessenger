@@ -98,7 +98,9 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void redirectUserToRegisterActivity() {
         Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
     }
 
     private void redirectUserToMainActivity() {
