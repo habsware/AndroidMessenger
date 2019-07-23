@@ -77,6 +77,7 @@ public class GroupFragment extends Fragment {
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     set.add((dataSnapshot1).getKey());
                 }
+                groupsList.clear();
                 groupsList.addAll(set);
                 arrayAdapter.notifyDataSetChanged();
             }

@@ -1,5 +1,6 @@
 package com.habsware.messenger;
 
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,14 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,9 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
-import java.util.SimpleTimeZone;
-
-import static java.util.Calendar.getInstance;
 
 public class GroupChatActivity extends AppCompatActivity {
 
@@ -66,7 +62,7 @@ public class GroupChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sendMessage();
-
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
                 messageEditText.setText("");
             }
         });
@@ -108,12 +104,16 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private void displayExistingMessages(DataSnapshot dataSnapshot) {
 
-        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-            String chatDate = (String) (dataSnapshot1).getValue();
-            String chatMessage = (String) (dataSnapshot1).getValue();
-            String chatName = (String) (dataSnapshot1).getValue();
+        messageTextView.setVisibility(View.VISIBLE);
 
-            messageTextView.append(chatMessage + "\n");
+        Iterator iterator = dataSnapshot.getChildren().iterator();
+
+        while(iterator.hasNext()){
+            String chatDate = (String) ((DataSnapshot)iterator.next()).getValue();
+            String messageText = (String) ((DataSnapshot)iterator.next()).getValue();
+            String currentUserName = (String) ((DataSnapshot)iterator.next()).getValue();
+            messageTextView.append(currentUserName + ": " + messageText + "\n" + chatDate + "\n\n");
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN);
         }
     }
 
