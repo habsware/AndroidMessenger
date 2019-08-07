@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.data.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -23,13 +24,15 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
-    private DatabaseReference rootRef;
+    private DatabaseReference usersRef;
+    private String currentUserId, currentUserDeviceToken;
     private Button registerButton;
     private EditText emailEditText, passwordEditText;
     private TextView signInTextView;
@@ -42,8 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         auth = FirebaseAuth.getInstance();
-        rootRef = FirebaseDatabase.getInstance().getReference();
-
+        usersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         registerButton = findViewById(R.id.registerButton);
         emailEditText = findViewById(R.id.registerEmailEditView);
         passwordEditText = findViewById(R.id.registerPassEditView);
@@ -79,12 +81,19 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String userId = auth.getCurrentUser().getUid();
-                    rootRef.child("Users").child(userId).setValue("");
-                    redirectUserToMainActivity();
-                    creatingUserDialogBox.dismiss();
-                    Toast.makeText(RegisterActivity.this, "Successfully Registered!", Toast.LENGTH_SHORT)
-                            .show();
+                    currentUserId = auth.getCurrentUser().getUid();
+                    currentUserDeviceToken = FirebaseInstanceId.getInstance().getToken();
+                    UserInfo userInfo = new UserInfo(currentUserDeviceToken);
+                    usersRef.child(currentUserId).setValue("");
+                    usersRef.child(currentUserId).child("deviceToken").setValue(userInfo.deviceToken).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            redirectUserToMainActivity();
+                            creatingUserDialogBox.dismiss();
+                            Toast.makeText(RegisterActivity.this, "Successfully Registered!", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    });
                 }
                 else {
                     String errorMessage = task.getException().getMessage();

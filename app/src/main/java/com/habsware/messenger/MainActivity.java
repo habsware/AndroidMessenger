@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser();
         ref = FirebaseDatabase.getInstance().getReference();
-        toolbar = findViewById(R.id.main_page_toolbar);
+        toolbar = findViewById(R.id.main_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Messenger");
         viewPager = findViewById(R.id.main_tab_pager);
@@ -94,50 +94,14 @@ public class MainActivity extends AppCompatActivity {
             redirectUserToSettingsActivity();
         }
         if (item.getItemId() == R.id.dropDownMenu_findFriends){
-        }
-        if (item.getItemId() == R.id.dropDownMenu_groupChat){
-            startNewGroupchat();
+            redirectToFindFriendsActivity();
         }
         return true;
     }
 
-    private void startNewGroupchat() {
-
-        final EditText groupNameEditText = new EditText(this);
-        groupNameEditText.setHint("e.g" + "\"\"");
 
 
-        new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog)
-                .setTitle("Provide The Name Of The New Group")
-                .setView(groupNameEditText)
-                .setPositiveButton("Create ", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        String getGroupName = groupNameEditText.getText().toString().trim();
-                        if (getGroupName.isEmpty())
-                            Toast.makeText(MainActivity.this, "Please provide a group name", Toast.LENGTH_SHORT).show();
-                        else
-                            createNewGroupChat(getGroupName);
-                    }
-                })
-                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                })
-                .setIcon(android.R.drawable.ic_input_add)
-                .show();
-    }
 
-    private void createNewGroupChat(final String groupName) {
-        ref.child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                    Toast.makeText(MainActivity.this, groupName + " has been created successfully", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     public void redirectUserToLoginActivity(){
         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -155,6 +119,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void redirectUserToSettingsActivity() {
         Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    private void redirectToFindFriendsActivity() {
+        Intent intent = new Intent(getApplicationContext(), FindFriendsActivity.class);
         startActivity(intent);
     }
 }

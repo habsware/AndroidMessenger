@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1D1919"
     tools:context=".MainActivity">
 
 
@@ -13,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <include
-            android:id="@+id/main_page_toolbar"
+            android:id="@+id/main_toolbar"
             layout="@layout/app_bar_layout"
             >
         </include>

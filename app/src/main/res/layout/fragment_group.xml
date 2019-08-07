@@ -3,13 +3,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GroupFragment">
 
 <ListView
     android:id="@+id/groupsListView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 </ListView>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/CreateGroupActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="38dp"
+        android:src="@drawable/create_group"
+        app:maxImageSize="24dp"/>
+
+    <TextView
+        android:id="@+id/noRequestsTextView_groups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="288dp"
+        android:text="You currently have no groups"
+        android:textAllCaps="false"
+        android:textSize="20dp"
+        android:textStyle="bold|italic"
+        android:visibility="invisible"
+        android:textColor="#FFFFFF"/>
 </RelativeLayout>

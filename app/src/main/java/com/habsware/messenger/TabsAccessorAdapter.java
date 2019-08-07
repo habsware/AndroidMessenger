@@ -19,12 +19,11 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
         switch(i){
 
             case 0:
-                return new ChatFragment();
+                return new ContactsFragment();
             case 1:
                 return new GroupFragment();
             case 2:
-                return new ContactsFragment();
-
+                return new RequestsFragment();
                 default:
                     return null;
         }
@@ -44,12 +43,11 @@ public class TabsAccessorAdapter extends FragmentPagerAdapter {
         switch(position){
 
             case 0:
-                return "Chats";
+                return "Contacts";
             case 1:
                 return "Groups";
             case 2:
-                return "Contacts";
-
+                return "Requests";
             default:
                 return null;
         }

@@ -3,26 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContactsFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RequestsFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/contactsRecyclerView"
+        android:id="@+id/requestsRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        />
+
 
     <TextView
-        android:id="@+id/noRequestsTextView_contacts"
+        android:id="@+id/noRequestsTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="59dp"
         android:layout_marginTop="288dp"
-        android:text="You currently have no contacts"
+        android:text="You currently have no requests"
         android:textAllCaps="false"
         android:textSize="20dp"
         android:textStyle="bold|italic"
         android:visibility="invisible"
         android:textColor="#FFFFFF"/>
-
 </RelativeLayout>

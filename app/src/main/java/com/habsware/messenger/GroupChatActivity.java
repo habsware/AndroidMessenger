@@ -29,11 +29,11 @@ public class GroupChatActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private DatabaseReference userRef, groupRef, groupMessageIdRef;
-    private Toolbar toolbar;
     private ImageButton sendMessageButton;
     private EditText messageEditText;
     private ScrollView scrollView;
     private TextView messageTextView;
+    private Toolbar groupChatToolbar;
     private String currentGroup, currentUserId, currentUserName, currentDate;
 
     @Override
@@ -47,8 +47,10 @@ public class GroupChatActivity extends AppCompatActivity {
         currentUserId = auth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
         groupRef = FirebaseDatabase.getInstance().getReference().child("Groups").child(currentGroup);
-        toolbar = findViewById(R.id.groupChat_layoutBar);
-        setSupportActionBar(toolbar);
+        groupChatToolbar = findViewById(R.id.groupChatToolbar);
+        setSupportActionBar(groupChatToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(currentGroup);
 
         sendMessageButton = findViewById(R.id.sendMessageButton);

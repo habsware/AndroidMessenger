@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#1D1919"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/displayUsersCurrentImage"
+            android:layout_width="78dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/male_image" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/displayUserNameTextView"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:text="User name"
+                    android:textAlignment="textStart"
+                    android:textSize="15sp"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:layout_marginStart="15dp"/>
+
+                <ImageView
+                    android:id="@+id/onlineStatusImageView"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginTop="5dp"
+                    android:src="@drawable/online"
+                    android:visibility="invisible"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/displayUserStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="User status"
+                android:textColor="#FFFFFF"
+                android:textAlignment="textStart"
+                android:textStyle="italic"
+                android:textSize="15sp"
+                android:layout_marginStart="15dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/displayUserSendMessageButton"
+                    android:layout_width="90dp"
+                    android:layout_height="29dp"
+                    android:background="@drawable/buttons"
+                    android:text="Send Message"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="12sp"
+                    android:layout_marginStart="11dp"
+                    android:layout_gravity="bottom"
+                    android:visibility="invisible" />
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/displayUserAcceptButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="70dp"
+                    android:src="@drawable/accept_request"
+                    app:fabCustomSize="40dp"
+                    app:maxImageSize="25dp"
+                    android:visibility="invisible"/>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/displayUserDeclineButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="52dp"
+                    android:layout_marginLeft="20dp"
+                    android:backgroundTint="@color/decline"
+                    android:src="@drawable/decline_request"
+                    app:borderWidth="0dp"
+                    app:fabCustomSize="40dp"
+                    app:maxImageSize="16dp"
+                    android:visibility="invisible"/>
+
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

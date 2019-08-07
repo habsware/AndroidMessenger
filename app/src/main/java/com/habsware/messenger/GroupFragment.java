@@ -1,17 +1,25 @@
 package com.habsware.messenger;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +45,8 @@ public class GroupFragment extends Fragment {
     private ListView groupsListView;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> groupsList = new ArrayList<>();
+    private FloatingActionButton createGroupButton;
+    private TextView noRequestsTextView;
 
     public GroupFragment() {
         // Required empty public constructor
@@ -49,7 +59,9 @@ public class GroupFragment extends Fragment {
         // Inflate the layout for this fragment
          groupView = inflater.inflate(R.layout.fragment_group, container, false);
 
+         createGroupButton  = groupView.findViewById(R.id.CreateGroupActionButton);
          groupsRef = FirebaseDatabase.getInstance().getReference().child("Groups");
+         noRequestsTextView = groupView.findViewById(R.id.noRequestsTextView_groups);
          groupsListView = groupView.findViewById(R.id.groupsListView);
          arrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, groupsList);
          groupsListView.setAdapter(arrayAdapter);
@@ -66,6 +78,14 @@ public class GroupFragment extends Fragment {
              }
          });
 
+         createGroupButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                startNewGroupChat();
+
+             }
+         });
+
          return groupView;
     }
 
@@ -73,9 +93,12 @@ public class GroupFragment extends Fragment {
         groupsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()){
+                    noRequestsTextView.setVisibility(View.VISIBLE);
+                }
                 Set<String> set = new HashSet<>();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    set.add((dataSnapshot1).getKey());
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    set.add((data).getKey());
                 }
                 groupsList.clear();
                 groupsList.addAll(set);
@@ -84,6 +107,43 @@ public class GroupFragment extends Fragment {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
+    private void startNewGroupChat() {
+
+        final EditText groupNameEditText = new EditText(getContext());
+        groupNameEditText.setHint("Provide a Name..");
+
+
+        new AlertDialog.Builder(getContext(), android.R.style.Theme_DeviceDefault_Light_Dialog)
+                .setTitle("Create a New Group Chat")
+                .setView(groupNameEditText)
+                .setPositiveButton("Create ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String getGroupName = groupNameEditText.getText().toString().trim();
+                        if (getGroupName.isEmpty())
+                            Toast.makeText(getContext(), "Please provide a group name", Toast.LENGTH_SHORT).show();
+                        else
+                            createNewGroupChat(getGroupName);
+                    }
+                })
+                .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_input_add)
+                .show();
+    }
+
+    private void createNewGroupChat(final String groupName) {
+        groupsRef.child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful())
+                    Toast.makeText(getContext(), groupName + " has been created successfully", Toast.LENGTH_SHORT).show();
             }
         });
     }

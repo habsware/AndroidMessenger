@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
@@ -34,18 +35,21 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    FirebaseAuth auth;
-    DatabaseReference ref;
+    private FirebaseAuth auth;
+    private DatabaseReference ref;
     private StorageReference imageStorageReference;
     private String currentUserId;
-    Button saveSettingsButton;
-    EditText userNameEditText, fullNameEditText, phoneNumEditText, statusEditText;
-    CircleImageView profilePic;
+    private Button saveSettingsButton;
+    private EditText userNameEditText, fullNameEditText, phoneNumEditText, statusEditText;
+    private CircleImageView profilePic;
+    private Toolbar settingsToolbar;
     private ProgressDialog progressDialog;
     private static final int PhoneGallery = 1;
 
@@ -65,6 +69,12 @@ public class SettingsActivity extends AppCompatActivity {
         statusEditText = findViewById(R.id.statusEditText);
         profilePic = findViewById(R.id.profile_image);
         progressDialog = new ProgressDialog(this);
+
+        settingsToolbar = findViewById(R.id.settingsToolbar);
+        setSupportActionBar(settingsToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Account Settings");
 
         userNameEditText.setVisibility(View.INVISIBLE);
 
@@ -231,8 +241,13 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(this, "Please provide a state for your presence status", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                UserInfo user = new UserInfo(userName, fullName, phoneNum, status);
-                ref.child("Users").child(currentUserId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                //UserInfo user = new UserInfo(userName, fullName, phoneNum, status);
+                HashMap<String, Object> userMap = new HashMap<>();
+                userMap.put("userName",userName);
+                userMap.put("fullName",fullName);
+                userMap.put("phoneNum",phoneNum);
+                userMap.put("statusMode", status);
+                ref.child("Users").child(currentUserId).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {

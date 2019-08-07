@@ -6,6 +6,13 @@ public class UserInfo {
     String fullName;
     String phoneNum;
     String statusMode;
+    String image;
+    String deviceToken;
+
+
+    public UserInfo(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
 
     public UserInfo(String userName, String fullName, String phoneNum, String statusMode) {
         this.userName = userName;
@@ -13,6 +20,7 @@ public class UserInfo {
         this.phoneNum = phoneNum;
         this.statusMode = statusMode;
     }
+
     public UserInfo() {
     }
     public String getUserName(){
@@ -29,5 +37,11 @@ public class UserInfo {
 
     public String getStatusMode() {
         return statusMode;
+    }
+    public String getImage() {
+        return image;
+    }
+    public String getDeviceToken() {
+        return deviceToken;
     }
 }
